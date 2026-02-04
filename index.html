@@ -162,6 +162,9 @@
         <div class="blob blob-3"></div>
     </div>
 
+    <!-- Hidden File Input for Restore -->
+    <input type="file" id="restoreInput" accept=".json" class="hidden" onchange="restaurarBackup(this)">
+
     <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 h-full relative z-10">
 
         <!-- Coluna Esquerda: Calendário -->
@@ -169,42 +172,70 @@
 
             <header class="glass-panel rounded-3xl p-5 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="text-center md:text-left">
-                    <h1
-                        class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 drop-shadow-sm font-display tracking-tight">
-                        Agenda 2026</h1>
-                    <p class="text-xs font-semibold text-blue-300/80 uppercase tracking-[0.2em]">Prof. Sérgio Araújo</p>
+                    <h1 class="text-3xl font-bold text-white drop-shadow-md font-display tracking-tight">Agenda 2026
+                    </h1>
+                    <p class="text-xs font-semibold text-white/80 uppercase tracking-[0.2em]">Prof. Sérgio Araújo</p>
                 </div>
 
-                <div
-                    class="flex items-center gap-4 bg-slate-900/50 rounded-full p-1.5 ring-1 ring-white/10 backdrop-blur-md">
-                    <button onclick="mudarMes(-1)"
-                        class="p-2.5 hover:bg-white/10 rounded-full transition text-blue-400 active:scale-90">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m15 18-6-6 6-6" />
-                        </svg>
-                    </button>
-                    <span id="mesAnoDisplay" class="font-bold text-lg w-40 text-center text-slate-100">Janeiro
-                        2026</span>
-                    <button onclick="mudarMes(1)"
-                        class="p-2.5 hover:bg-white/10 rounded-full transition text-blue-400 active:scale-90">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
-                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-                            <path d="m9 18 6-6-6-6" />
-                        </svg>
-                    </button>
+                <div class="flex items-center gap-2">
+                    <!-- Controles Mês -->
+                    <div
+                        class="flex items-center gap-4 bg-slate-900/50 rounded-full p-1.5 ring-1 ring-white/10 backdrop-blur-md mx-auto md:mx-0">
+                        <button onclick="mudarMes(-1)"
+                            class="p-2.5 hover:bg-white/10 rounded-full transition text-white active:scale-90">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m15 18-6-6 6-6" />
+                            </svg>
+                        </button>
+                        <span id="mesAnoDisplay" class="font-bold text-lg w-40 text-center text-white">Janeiro
+                            2026</span>
+                        <button onclick="mudarMes(1)"
+                            class="p-2.5 hover:bg-white/10 rounded-full transition text-white active:scale-90">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="m9 18 6-6-6-6" />
+                            </svg>
+                        </button>
+                    </div>
+
+                    <!-- Botões Backup -->
+                    <div class="flex gap-2 ml-2">
+                        <button onclick="fazerBackup()" title="Backup (Download)"
+                            class="p-3 bg-white/5 hover:bg-white/10 rounded-full backdrop-blur-md ring-1 ring-white/10 transition text-emerald-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="7 10 12 15 17 10" />
+                                <line x1="12" x2="12" y1="15" y2="3" />
+                            </svg>
+                        </button>
+                        <button onclick="document.getElementById('restoreInput').click()" title="Restaurar Backup"
+                            class="p-3 bg-white/5 hover:bg-white/10 rounded-full backdrop-blur-md ring-1 ring-white/10 transition text-amber-400">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round">
+                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                                <polyline points="17 8 12 3 7 8" />
+                                <line x1="12" x2="12" y1="3" y2="15" />
+                            </svg>
+                        </button>
+                    </div>
                 </div>
             </header>
 
             <div class="glass-panel rounded-3xl p-4 md:p-6 flex-grow">
                 <div class="grid grid-cols-7 mb-4 text-center">
-                    <div class="text-[10px] font-bold text-indigo-300/60 uppercase tracking-widest">Dom</div>
-                    <div class="text-[10px] font-bold text-indigo-300/60 uppercase tracking-widest">Seg</div>
-                    <div class="text-[10px] font-bold text-indigo-300/60 uppercase tracking-widest">Ter</div>
-                    <div class="text-[10px] font-bold text-indigo-300/60 uppercase tracking-widest">Qua</div>
-                    <div class="text-[10px] font-bold text-indigo-300/60 uppercase tracking-widest">Qui</div>
-                    <div class="text-[10px] font-bold text-indigo-300/60 uppercase tracking-widest">Sex</div>
-                    <div class="text-[10px] font-bold text-indigo-300/60 uppercase tracking-widest">Sáb</div>
+                    <div class="text-[10px] font-bold text-white/50 uppercase tracking-widest">Dom</div>
+                    <div class="text-[10px] font-bold text-white/50 uppercase tracking-widest">Seg</div>
+                    <div class="text-[10px] font-bold text-white/50 uppercase tracking-widest">Ter</div>
+                    <div class="text-[10px] font-bold text-white/50 uppercase tracking-widest">Qua</div>
+                    <div class="text-[10px] font-bold text-white/50 uppercase tracking-widest">Qui</div>
+                    <div class="text-[10px] font-bold text-white/50 uppercase tracking-widest">Sex</div>
+                    <div class="text-[10px] font-bold text-white/50 uppercase tracking-widest">Sáb</div>
                 </div>
 
                 <div id="calendarGrid" class="grid grid-cols-7 gap-2 md:gap-3 h-[400px] md:h-96 auto-rows-fr">
@@ -229,7 +260,7 @@
                     Foco do Mês
                 </h2>
                 <textarea id="metaMes"
-                    class="w-full bg-slate-900/40 border border-white/5 rounded-xl p-3 text-sm focus:ring-2 focus:ring-purple-500/50 focus:bg-slate-900/60 transition resize-none h-24 text-slate-200 leading-relaxed outline-none"
+                    class="w-full bg-slate-900/40 border border-white/5 rounded-xl p-3 text-sm focus:ring-2 focus:ring-purple-500/50 focus:bg-slate-900/60 transition resize-none h-20 text-slate-200 leading-relaxed outline-none"
                     placeholder="Defina o objetivo pedagógico principal..."></textarea>
             </div>
 
@@ -237,12 +268,22 @@
                 <div class="flex justify-between items-end mb-4 border-b border-white/5 pb-4">
                     <div>
                         <h2 class="text-lg font-bold text-white">Diário</h2>
-                        <p id="dataSelecionada"
-                            class="text-xs text-blue-400 font-semibold uppercase tracking-wide mt-1">Selecione um dia
-                        </p>
+                        <div class="flex flex-wrap gap-2 mt-2" id="categorySelector">
+                            <!-- Categorias geradas via JS -->
+                        </div>
                     </div>
+                </div>
+
+                <p id="dataSelecionada" class="text-xs text-blue-400 font-semibold uppercase tracking-wide mb-2">
+                    Selecione um dia</p>
+
+                <textarea id="eventoTexto"
+                    class="w-full flex-grow bg-slate-900/30 border border-white/5 rounded-xl p-4 text-sm focus:ring-2 focus:ring-blue-500/50 focus:bg-slate-900/50 transition resize-none outline-none text-slate-200"
+                    placeholder="Toque em um dia para adicionar notas..."></textarea>
+
+                <div class="flex gap-2 mt-3">
                     <button onclick="salvarEvento()"
-                        class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:scale-95 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-lg shadow-blue-500/20 flex items-center gap-2">
+                        class="flex-1 bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:scale-95 text-white text-xs font-bold px-4 py-3 rounded-xl transition shadow-lg shadow-blue-500/20 flex justify-center items-center gap-2">
                         <span>Salvar</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -251,21 +292,27 @@
                             <polyline points="7 3 7 8 15 8" />
                         </svg>
                     </button>
-                </div>
 
-                <textarea id="eventoTexto"
-                    class="w-full flex-grow bg-slate-900/30 border border-white/5 rounded-xl p-4 text-sm focus:ring-2 focus:ring-blue-500/50 focus:bg-slate-900/50 transition resize-none outline-none text-slate-200"
-                    placeholder="Toque em um dia para adicionar notas..."></textarea>
-
-                <div class="mt-4 pt-4">
-                    <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-3 flex items-center gap-2">
-                        Resumo do Mês
-                        <span class="h-px bg-white/10 flex-grow"></span>
-                    </h3>
-                    <div id="listaEventosMes" class="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
-                        <!-- Lista gerada via JS -->
-                    </div>
+                    <button onclick="exportarICS()" title="Exportar para Calendário do Celular (.ics)"
+                        class="bg-white/5 hover:bg-white/10 active:scale-95 text-white p-3 rounded-xl transition border border-white/5">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect width="18" height="18" x="3" y="4" rx="2" ry="2" />
+                            <line x1="16" x2="16" y1="2" y2="6" />
+                            <line x1="8" x2="8" y1="2" y2="6" />
+                            <line x1="3" x2="21" y1="10" y2="10" />
+                            <path d="m9 16 2 2 4-4" />
+                        </svg>
+                    </button>
                 </div>
+            </div>
+
+            <!-- Resumo Rápido -->
+            <div class="glass-panel rounded-3xl p-5 max-h-40 overflow-y-auto custom-scrollbar">
+                <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-2 flex items-center gap-2">
+                    Resumo do Mês
+                </h3>
+                <div id="listaEventosMes" class="space-y-1"></div>
             </div>
         </div>
 
@@ -289,68 +336,60 @@
     </div>
 
     <script>
-        // --- LÓGICA DO PWA ---
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('./sw.js')
-                    .then(reg => console.log('SW registrado!', reg))
-                    .catch(err => console.log('SW falhou:', err));
-            });
-        }
+        // --- CORES & CATEGORIAS ---
+        const CATEGORIAS = {
+            'aula': { nome: 'Aula', cor: 'bg-blue-500', sombra: 'shadow-blue-500/50', border: 'border-blue-400' },
+            'prova': { nome: 'Prova', cor: 'bg-red-500', sombra: 'shadow-red-500/50', border: 'border-red-400' },
+            'reuniao': { nome: 'Reunião', cor: 'bg-purple-500', sombra: 'shadow-purple-500/50', border: 'border-purple-400' },
+            'planej': { nome: 'Planej.', cor: 'bg-emerald-500', sombra: 'shadow-emerald-500/50', border: 'border-emerald-400' }
+        };
+        let catSelecionada = 'aula';
 
+        // --- LÓGICA DO PWA (SW) ---
+        if ('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js');
         let deferredPrompt;
         const installContainer = document.getElementById('installContainer');
-        const btnInstall = document.getElementById('btnInstall');
+        window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; installContainer.classList.remove('opacity-0', 'translate-y-10'); });
+        document.getElementById('btnInstall').addEventListener('click', async () => { if (deferredPrompt) { deferredPrompt.prompt(); installContainer.classList.add('opacity-0'); } });
 
-        window.addEventListener('beforeinstallprompt', (e) => {
-            e.preventDefault();
-            deferredPrompt = e;
-            installContainer.classList.remove('opacity-0', 'translate-y-10');
-        });
-
-        btnInstall.addEventListener('click', async () => {
-            if (deferredPrompt) {
-                deferredPrompt.prompt();
-                const { outcome } = await deferredPrompt.userChoice;
-                if (outcome === 'accepted') {
-                    deferredPrompt = null;
-                    installContainer.classList.add('opacity-0', 'translate-y-10');
-                }
-            }
-        });
-
-        // --- LÓGICA DA APLICAÇÃO ---
+        // --- APP ---
         const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
         let dataAtual = new Date(2026, 0, 1);
         let diaSelecionado = null;
-
-        const feriados = {
-            "1-1": "Confraternização Universal", "21-4": "Tiradentes", "1-5": "Dia do Trabalho",
-            "7-9": "Independência", "12-10": "Nossa Sra. Aparecida", "2-11": "Finados",
-            "15-11": "Proclamação República", "25-12": "Natal"
-        };
+        const feriados = { "1-1": "Confraternização Universal", "21-4": "Tiradentes", "1-5": "Dia do Trabalho", "7-9": "Independência", "12-10": "NSra. Aparecida", "2-11": "Finados", "15-11": "Proclamação República", "25-12": "Natal" };
 
         function init() {
-            const lastDate = localStorage.getItem('last-view-date-v2');
+            const lastDate = localStorage.getItem('last-view-date-v3');
             if (lastDate) dataAtual = new Date(lastDate);
-
+            renderizarCategorias();
             renderizarCalendario();
             carregarMetaMes();
-            renderizarListaEventos();
 
             document.getElementById('metaMes').addEventListener('input', (e) => {
-                const chave = `meta-2026-${dataAtual.getMonth()}`;
-                localStorage.setItem(chave, e.target.value);
+                localStorage.setItem(`meta-2026-${dataAtual.getMonth()}`, e.target.value);
             });
         }
 
+        function renderizarCategorias() {
+            const container = document.getElementById('categorySelector');
+            container.innerHTML = Object.entries(CATEGORIAS).map(([key, info]) => `
+                <button onclick="mudarCategoria('${key}')" 
+                    class="text-[10px] uppercase font-bold px-2 py-1 rounded-md border transition ${catSelecionada === key ? `bg-white/20 text-white ${info.border}` : 'bg-transparent text-slate-500 border-transparent hover:bg-white/5'}">
+                    ${info.nome}
+                </button>
+            `).join('');
+        }
+
+        function mudarCategoria(key) {
+            catSelecionada = key;
+            renderizarCategorias();
+        }
+
         function renderizarCalendario() {
-            localStorage.setItem('last-view-date-v2', dataAtual.toISOString());
+            localStorage.setItem('last-view-date-v3', dataAtual.toISOString());
             const ano = dataAtual.getFullYear();
             const mes = dataAtual.getMonth();
-
             document.getElementById('mesAnoDisplay').innerText = `${meses[mes]} ${ano}`;
-
             carregarMetaMes();
             renderizarListaEventos();
 
@@ -364,19 +403,22 @@
             for (let dia = 1; dia <= totalDias; dia++) {
                 const el = document.createElement('div');
                 const chaveData = `${dia}-${mes + 1}-${ano}`;
-                const nota = localStorage.getItem(`evento-${chaveData}`);
+                const rawData = localStorage.getItem(`evento-${chaveData}`);
+                const eventData = rawData ? JSON.parse(rawData) : null;
                 const feriado = feriados[`${dia}-${mes + 1}`];
 
-                // Estilo padrão dia normal Dark Glass
                 let css = "day-card bg-white/5 hover:bg-white/10 rounded-xl p-2 cursor-pointer border border-white/5 hover:border-blue-400/50 flex flex-col justify-between h-full min-h-[60px] md:min-h-[80px]";
-
                 if (diaSelecionado && dia === diaSelecionado.getDate() && mes === diaSelecionado.getMonth()) {
-                    css += " active-day shadow-lg shadow-indigo-500/20";
+                    css += " active-day shadow-lg shadow-indigo-500/20 bg-white/10";
                 }
 
                 let dot = "";
-                if (nota) dot = `<div class="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.6)]"></div>`;
-                else if (feriado) dot = `<div class="w-1.5 h-1.5 rounded-full bg-red-400/80" title="${feriado}"></div>`;
+                if (eventData) {
+                    const cat = CATEGORIAS[eventData.cat] || CATEGORIAS['aula'];
+                    dot = `<div class="w-2 h-2 rounded-full ${cat.cor} ${cat.sombra}"></div>`;
+                } else if (feriado) {
+                    dot = `<div class="w-1.5 h-1.5 rounded-full bg-red-400/80" title="${feriado}"></div>`;
+                }
 
                 el.className = css;
                 el.innerHTML = `<span class="font-bold text-sm ${feriado ? 'text-red-400' : 'text-slate-300'}">${dia}</span><div class="flex justify-end p-1">${dot}</div>`;
@@ -391,7 +433,23 @@
             const chave = `${dia}-${dataAtual.getMonth() + 1}-${dataAtual.getFullYear()}`;
 
             document.getElementById('dataSelecionada').innerText = diaSelecionado.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
-            document.getElementById('eventoTexto').value = localStorage.getItem(`evento-${chave}`) || "";
+
+            const rawData = localStorage.getItem(`evento-${chave}`);
+            if (rawData) {
+                try {
+                    const data = JSON.parse(rawData);
+                    document.getElementById('eventoTexto').value = data.text || "";
+                    catSelecionada = data.cat || 'aula';
+                } catch {
+                    // Legado (string pura)
+                    document.getElementById('eventoTexto').value = rawData;
+                    catSelecionada = 'aula';
+                }
+            } else {
+                document.getElementById('eventoTexto').value = "";
+                catSelecionada = 'aula';
+            }
+            renderizarCategorias();
             document.getElementById('eventoTexto').focus();
 
             const feriado = feriados[`${dia}-${dataAtual.getMonth() + 1}`];
@@ -402,7 +460,13 @@
             if (!diaSelecionado) return alert("Selecione um dia!");
             const chave = `evento-${diaSelecionado.getDate()}-${diaSelecionado.getMonth() + 1}-${diaSelecionado.getFullYear()}`;
             const txt = document.getElementById('eventoTexto').value.trim();
-            txt ? localStorage.setItem(chave, txt) : localStorage.removeItem(chave);
+
+            if (txt) {
+                const data = { text: txt, cat: catSelecionada, ts: Date.now() };
+                localStorage.setItem(chave, JSON.stringify(data));
+            } else {
+                localStorage.removeItem(chave);
+            }
             renderizarCalendario();
         }
 
@@ -417,20 +481,94 @@
             let html = "";
 
             for (let d = 1; d <= totalDias; d++) {
-                const nota = localStorage.getItem(`evento-${d}-${dataAtual.getMonth() + 1}-${dataAtual.getFullYear()}`);
-                if (nota) html += `<div onclick="selecionarDia(${d})" class="text-xs p-3 bg-white/5 rounded-lg border-l-2 border-blue-500 hover:bg-white/10 transition cursor-pointer group"><strong class="block text-blue-300 mb-1 group-hover:text-blue-200">Dia ${d}</strong><span class="text-slate-400 group-hover:text-slate-200">${nota}</span></div>`;
+                const raw = localStorage.getItem(`evento-${d}-${dataAtual.getMonth() + 1}-${dataAtual.getFullYear()}`);
+                if (raw) {
+                    let data = { text: raw, cat: 'aula' };
+                    try { data = JSON.parse(raw); } catch { }
+                    const cat = CATEGORIAS[data.cat] || CATEGORIAS['aula'];
 
-                const feriado = feriados[`${d}-${dataAtual.getMonth() + 1}`];
-                if (feriado) html += `<div class="text-xs p-2 bg-red-900/20 rounded-lg text-red-300 border border-red-500/10 opacity-70 select-none">📌 ${d}: ${feriado}</div>`;
+                    html += `<div onclick="selecionarDia(${d})" class="text-xs p-2 bg-white/5 rounded-lg border-l-2 ${cat.border.replace('border', 'border')} hover:bg-white/10 transition cursor-pointer flex gap-2 items-center">
+                        <span class="font-bold text-white w-5 text-center">${d}</span>
+                        <div class="h-1.5 w-1.5 rounded-full ${cat.cor}"></div>
+                        <span class="text-slate-300 truncate">${data.text}</span>
+                   </div>`;
+                }
             }
-            if (!html) html = `<div class="text-xs text-slate-600 text-center py-6 italic">Nada agendado para este mês.</div>`;
-            lista.innerHTML = html;
+            lista.innerHTML = html || `<div class="text-xs text-slate-600 text-center py-2 italic">Nada agendado.</div>`;
         }
 
         function mudarMes(dir) {
             dataAtual.setMonth(dataAtual.getMonth() + dir);
             diaSelecionado = null;
             renderizarCalendario();
+        }
+
+        // --- BACKUP & RESTORE ---
+        function fazerBackup() {
+            const backup = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const key = localStorage.key(i);
+                if (key.startsWith('evento-') || key.startsWith('meta-')) {
+                    backup[key] = localStorage.getItem(key);
+                }
+            }
+            const blob = new Blob([JSON.stringify(backup)], { type: 'application/json' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `backup-agenda-2026-${new Date().toISOString().slice(0, 10)}.json`;
+            a.click();
+        }
+
+        function restaurarBackup(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const dados = JSON.parse(e.target.result);
+                Object.keys(dados).forEach(k => localStorage.setItem(k, dados[k]));
+                alert('Agenda restaurada com sucesso!');
+                renderizarCalendario();
+            };
+            reader.readAsText(file);
+        }
+
+        // --- EXPORTAR ICS (Calendário) ---
+        function exportarICS() {
+            if (!diaSelecionado) return alert("Selecione o dia do evento para exportar.");
+            const chave = `evento-${diaSelecionado.getDate()}-${diaSelecionado.getMonth() + 1}-${diaSelecionado.getFullYear()}`;
+            const raw = localStorage.getItem(chave);
+            if (!raw) return alert("Nenhum evento neste dia para exportar.");
+
+            let data;
+            try { data = JSON.parse(raw); } catch { data = { text: raw }; }
+
+            // Criar data formatada ICS (YYYYMMDD)
+            const ano = diaSelecionado.getFullYear();
+            const mes = (diaSelecionado.getMonth() + 1).toString().padStart(2, '0');
+            const dia = diaSelecionado.getDate().toString().padStart(2, '0');
+            const dateStr = `${ano}${mes}${dia}`;
+
+            const icsContent =
+                `BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Agenda2026//ProfSergio//PT
+BEGIN:VEVENT
+UID:${Date.now()}@agenda2026
+DTSTAMP:${new Date().toISOString().replace(/[-:.]/g, '')}
+DTSTART;VALUE=DATE:${dateStr}
+SUMMARY:${data.text}
+DESCRIPTION:Criado via Agenda 2026 Lite
+END:VEVENT
+END:VCALENDAR`;
+
+            const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = `evento_${dateStr}.ics`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
         }
 
         init();
