@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" class="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -7,7 +7,7 @@
     <title>Trilha de Aprendizagem 2026</title>
 
     <!-- PWA Meta Tags -->
-    <meta name="theme-color" content="#4F46E5">
+    <meta name="theme-color" content="#020617">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link rel="manifest" href="manifest.json">
@@ -15,19 +15,88 @@
     <link rel="apple-touch-icon" href="icons/favicon.png">
 
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
     <style>
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Outfit', sans-serif;
             user-select: none;
             -webkit-tap-highlight-color: transparent;
+            overflow-x: hidden;
         }
 
+        /* Liquid Background Animation */
+        .liquid-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: #020617;
+            overflow: hidden;
+        }
+
+        .blob {
+            position: absolute;
+            background: linear-gradient(135deg, #4F46E5, #9333EA);
+            filter: blur(80px);
+            opacity: 0.4;
+            border-radius: 50%;
+            animation: float 10s infinite ease-in-out;
+        }
+
+        .blob-1 {
+            top: -10%;
+            left: -10%;
+            width: 50vw;
+            height: 50vw;
+            animation-delay: 0s;
+        }
+
+        .blob-2 {
+            bottom: -10%;
+            right: -10%;
+            width: 60vw;
+            height: 60vw;
+            background: linear-gradient(135deg, #2563EB, #06B6D4);
+            animation-delay: 2s;
+        }
+
+        .blob-3 {
+            top: 40%;
+            left: 40%;
+            width: 40vw;
+            height: 40vw;
+            background: linear-gradient(135deg, #DB2777, #7C3AED);
+            animation-delay: 4s;
+            opacity: 0.3;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+
+            33% {
+                transform: translate(30px, -50px) scale(1.1);
+            }
+
+            66% {
+                transform: translate(-20px, 20px) scale(0.9);
+            }
+
+            100% {
+                transform: translate(0, 0) scale(1);
+            }
+        }
+
+        /* Glassmorphism Dark */
         .glass-panel {
-            background: rgba(255, 255, 255, 0.85);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.5);
+            background: rgba(15, 23, 42, 0.4);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
         }
 
         .day-card {
@@ -39,11 +108,11 @@
         }
 
         .active-day {
-            border: 2px solid #4F46E5;
-            background-color: #EEF2FF;
+            border: 1px solid rgba(129, 140, 248, 0.5);
+            background: rgba(79, 70, 229, 0.2);
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.3);
         }
 
-        /* Animações */
         @keyframes fadeIn {
             from {
                 opacity: 0;
@@ -57,10 +126,10 @@
         }
 
         .animate-fade-in {
-            animation: fadeIn 0.3s ease-out forwards;
+            animation: fadeIn 0.4s ease-out forwards;
         }
 
-        /* Scrollbar */
+        /* Custom Scrollbar */
         ::-webkit-scrollbar {
             width: 6px;
         }
@@ -70,41 +139,55 @@
         }
 
         ::-webkit-scrollbar-thumb {
-            background: #cbd5e1;
+            background: rgba(255, 255, 255, 0.2);
             border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        textarea::placeholder {
+            color: rgba(148, 163, 184, 0.5);
         }
     </style>
 </head>
 
-<body
-    class="bg-gradient-to-br from-indigo-50 via-slate-50 to-purple-50 min-h-screen text-slate-800 p-4 md:p-6 pb-20 md:pb-6">
+<body class="text-slate-200 p-4 md:p-6 pb-24 md:pb-6">
 
-    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
+    <!-- Background Blobs -->
+    <div class="liquid-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 h-full relative z-10">
 
         <!-- Coluna Esquerda: Calendário -->
         <div class="lg:col-span-8 flex flex-col gap-6 animate-fade-in">
 
-            <header
-                class="glass-panel rounded-3xl p-5 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4 border-b-4 border-indigo-500/20">
+            <header class="glass-panel rounded-3xl p-5 flex flex-col md:flex-row justify-between items-center gap-4">
                 <div class="text-center md:text-left">
                     <h1
-                        class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+                        class="text-3xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-400 to-pink-400 drop-shadow-sm font-display tracking-tight">
                         Agenda 2026</h1>
-                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Prof. Sérgio Araújo</p>
+                    <p class="text-xs font-semibold text-blue-300/80 uppercase tracking-[0.2em]">Prof. Sérgio Araújo</p>
                 </div>
 
-                <div class="flex items-center gap-4 bg-white/80 rounded-full p-1.5 shadow-inner ring-1 ring-slate-100">
+                <div
+                    class="flex items-center gap-4 bg-slate-900/50 rounded-full p-1.5 ring-1 ring-white/10 backdrop-blur-md">
                     <button onclick="mudarMes(-1)"
-                        class="p-2.5 hover:bg-indigo-50 rounded-full transition text-indigo-600 active:scale-90">
+                        class="p-2.5 hover:bg-white/10 rounded-full transition text-blue-400 active:scale-90">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="m15 18-6-6 6-6" />
                         </svg>
                     </button>
-                    <span id="mesAnoDisplay" class="font-bold text-lg w-40 text-center text-slate-700">Janeiro
+                    <span id="mesAnoDisplay" class="font-bold text-lg w-40 text-center text-slate-100">Janeiro
                         2026</span>
                     <button onclick="mudarMes(1)"
-                        class="p-2.5 hover:bg-indigo-50 rounded-full transition text-indigo-600 active:scale-90">
+                        class="p-2.5 hover:bg-white/10 rounded-full transition text-blue-400 active:scale-90">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                             <path d="m9 18 6-6-6-6" />
@@ -113,15 +196,15 @@
                 </div>
             </header>
 
-            <div class="glass-panel rounded-3xl p-4 md:p-6 shadow-xl shadow-indigo-100/50 flex-grow">
+            <div class="glass-panel rounded-3xl p-4 md:p-6 flex-grow">
                 <div class="grid grid-cols-7 mb-4 text-center">
-                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Dom</div>
-                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Seg</div>
-                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Ter</div>
-                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Qua</div>
-                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Qui</div>
-                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Sex</div>
-                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Sáb</div>
+                    <div class="text-[10px] font-bold text-indigo-300/60 uppercase tracking-widest">Dom</div>
+                    <div class="text-[10px] font-bold text-indigo-300/60 uppercase tracking-widest">Seg</div>
+                    <div class="text-[10px] font-bold text-indigo-300/60 uppercase tracking-widest">Ter</div>
+                    <div class="text-[10px] font-bold text-indigo-300/60 uppercase tracking-widest">Qua</div>
+                    <div class="text-[10px] font-bold text-indigo-300/60 uppercase tracking-widest">Qui</div>
+                    <div class="text-[10px] font-bold text-indigo-300/60 uppercase tracking-widest">Sex</div>
+                    <div class="text-[10px] font-bold text-indigo-300/60 uppercase tracking-widest">Sáb</div>
                 </div>
 
                 <div id="calendarGrid" class="grid grid-cols-7 gap-2 md:gap-3 h-[400px] md:h-96 auto-rows-fr">
@@ -133,33 +216,33 @@
         <!-- Coluna Direita: Detalhes -->
         <div class="lg:col-span-4 flex flex-col gap-6 animate-fade-in" style="animation-delay: 0.1s">
 
-            <div
-                class="glass-panel rounded-3xl p-6 shadow-sm border-l-4 border-indigo-500 bg-white/80 relative overflow-hidden group">
-                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
+            <div class="glass-panel rounded-3xl p-6 relative overflow-hidden group">
+                <div
+                    class="absolute top-0 right-0 p-4 opacity-20 text-purple-400 group-hover:opacity-40 transition group-hover:scale-110 duration-500">
                     <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
                         stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10" />
                         <path d="m9 12 2 2 4-4" />
                     </svg>
                 </div>
-                <h2 class="text-sm font-bold text-indigo-600 mb-2 flex items-center gap-2 uppercase tracking-wide">
+                <h2 class="text-sm font-bold text-purple-300 mb-2 flex items-center gap-2 uppercase tracking-wide">
                     Foco do Mês
                 </h2>
                 <textarea id="metaMes"
-                    class="w-full bg-slate-50 border-0 rounded-xl p-3 text-sm focus:ring-2 focus:ring-indigo-200 focus:bg-white transition resize-none h-24 shadow-inner text-slate-600 leading-relaxed"
+                    class="w-full bg-slate-900/40 border border-white/5 rounded-xl p-3 text-sm focus:ring-2 focus:ring-purple-500/50 focus:bg-slate-900/60 transition resize-none h-24 text-slate-200 leading-relaxed outline-none"
                     placeholder="Defina o objetivo pedagógico principal..."></textarea>
             </div>
 
-            <div class="glass-panel rounded-3xl p-6 shadow-xl shadow-purple-100/50 flex-grow bg-white/90 flex flex-col">
-                <div class="flex justify-between items-end mb-4 border-b border-slate-100 pb-4">
+            <div class="glass-panel rounded-3xl p-6 flex-grow flex flex-col">
+                <div class="flex justify-between items-end mb-4 border-b border-white/5 pb-4">
                     <div>
-                        <h2 class="text-lg font-bold text-slate-800">Diário</h2>
+                        <h2 class="text-lg font-bold text-white">Diário</h2>
                         <p id="dataSelecionada"
-                            class="text-xs text-indigo-500 font-semibold uppercase tracking-wide mt-1">Selecione um dia
+                            class="text-xs text-blue-400 font-semibold uppercase tracking-wide mt-1">Selecione um dia
                         </p>
                     </div>
                     <button onclick="salvarEvento()"
-                        class="bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-lg shadow-indigo-500/30 flex items-center gap-2">
+                        class="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-500 hover:to-indigo-500 active:scale-95 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-lg shadow-blue-500/20 flex items-center gap-2">
                         <span>Salvar</span>
                         <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
                             stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -171,13 +254,13 @@
                 </div>
 
                 <textarea id="eventoTexto"
-                    class="w-full flex-grow bg-slate-50/50 border-0 rounded-xl p-4 text-sm focus:ring-2 focus:ring-indigo-200 focus:bg-white transition resize-none placeholder:text-slate-400"
-                    placeholder="Toque em um dia para adicionar notas, provas ou lembretes..."></textarea>
+                    class="w-full flex-grow bg-slate-900/30 border border-white/5 rounded-xl p-4 text-sm focus:ring-2 focus:ring-blue-500/50 focus:bg-slate-900/50 transition resize-none outline-none text-slate-200"
+                    placeholder="Toque em um dia para adicionar notas..."></textarea>
 
                 <div class="mt-4 pt-4">
-                    <h3 class="text-[10px] font-bold text-slate-400 uppercase mb-3 flex items-center gap-2">
+                    <h3 class="text-[10px] font-bold text-slate-500 uppercase mb-3 flex items-center gap-2">
                         Resumo do Mês
-                        <span class="h-px bg-slate-100 flex-grow"></span>
+                        <span class="h-px bg-white/10 flex-grow"></span>
                     </h3>
                     <div id="listaEventosMes" class="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
                         <!-- Lista gerada via JS -->
@@ -188,11 +271,11 @@
 
     </div>
 
-    <!-- PWA Install Button (Hidden by default) -->
+    <!-- PWA Install Button -->
     <div id="installContainer"
         class="fixed bottom-6 w-full flex justify-center pointer-events-none opacity-0 translate-y-10 transition-all duration-500 z-50">
         <button id="btnInstall"
-            class="pointer-events-auto bg-slate-900 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 font-semibold text-sm active:scale-95 transition-transform hover:bg-black ring-4 ring-white/30">
+            class="pointer-events-auto bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 font-semibold text-sm active:scale-95 transition-transform hover:bg-white/20 ring-1 ring-white/30">
             <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
                 stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <path d="M12 2v6" />
@@ -222,7 +305,6 @@
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
-            // Mostrar botão
             installContainer.classList.remove('opacity-0', 'translate-y-10');
         });
 
@@ -249,8 +331,7 @@
         };
 
         function init() {
-            // Recuperar último estado ou iniciar padrão
-            const lastDate = localStorage.getItem('last-view-date');
+            const lastDate = localStorage.getItem('last-view-date-v2');
             if (lastDate) dataAtual = new Date(lastDate);
 
             renderizarCalendario();
@@ -264,7 +345,7 @@
         }
 
         function renderizarCalendario() {
-            localStorage.setItem('last-view-date', dataAtual.toISOString());
+            localStorage.setItem('last-view-date-v2', dataAtual.toISOString());
             const ano = dataAtual.getFullYear();
             const mes = dataAtual.getMonth();
 
@@ -286,17 +367,19 @@
                 const nota = localStorage.getItem(`evento-${chaveData}`);
                 const feriado = feriados[`${dia}-${mes + 1}`];
 
-                let css = "day-card bg-white/60 hover:bg-white rounded-xl p-2 cursor-pointer border border-white/50 hover:border-indigo-300 flex flex-col justify-between h-full min-h-[60px] md:min-h-[80px] shadow-sm";
+                // Estilo padrão dia normal Dark Glass
+                let css = "day-card bg-white/5 hover:bg-white/10 rounded-xl p-2 cursor-pointer border border-white/5 hover:border-blue-400/50 flex flex-col justify-between h-full min-h-[60px] md:min-h-[80px]";
+
                 if (diaSelecionado && dia === diaSelecionado.getDate() && mes === diaSelecionado.getMonth()) {
-                    css += " active-day ring-2 ring-indigo-400 bg-indigo-50 shadow-inner";
+                    css += " active-day shadow-lg shadow-indigo-500/20";
                 }
 
                 let dot = "";
-                if (nota) dot = `<div class="w-2 h-2 rounded-full bg-indigo-500 shadow-sm shadow-indigo-300"></div>`;
-                else if (feriado) dot = `<div class="w-2 h-2 rounded-full bg-red-400 shadow-sm shadow-red-300" title="${feriado}"></div>`;
+                if (nota) dot = `<div class="w-2 h-2 rounded-full bg-cyan-400 shadow-[0_0_8px_rgba(34,211,238,0.6)]"></div>`;
+                else if (feriado) dot = `<div class="w-1.5 h-1.5 rounded-full bg-red-400/80" title="${feriado}"></div>`;
 
                 el.className = css;
-                el.innerHTML = `<span class="font-bold text-sm ${feriado ? 'text-red-500' : 'text-slate-600'}">${dia}</span><div class="flex justify-end p-1">${dot}</div>`;
+                el.innerHTML = `<span class="font-bold text-sm ${feriado ? 'text-red-400' : 'text-slate-300'}">${dia}</span><div class="flex justify-end p-1">${dot}</div>`;
                 el.onclick = () => selecionarDia(dia);
                 grid.appendChild(el);
             }
@@ -335,12 +418,12 @@
 
             for (let d = 1; d <= totalDias; d++) {
                 const nota = localStorage.getItem(`evento-${d}-${dataAtual.getMonth() + 1}-${dataAtual.getFullYear()}`);
-                if (nota) html += `<div onclick="selecionarDia(${d})" class="text-xs p-3 bg-white rounded-lg border-l-4 border-indigo-400 shadow-sm cursor-pointer hover:bg-slate-50 transition"><strong class="block text-indigo-900 mb-1">Dia ${d}</strong><span class="text-slate-600">${nota}</span></div>`;
+                if (nota) html += `<div onclick="selecionarDia(${d})" class="text-xs p-3 bg-white/5 rounded-lg border-l-2 border-blue-500 hover:bg-white/10 transition cursor-pointer group"><strong class="block text-blue-300 mb-1 group-hover:text-blue-200">Dia ${d}</strong><span class="text-slate-400 group-hover:text-slate-200">${nota}</span></div>`;
 
                 const feriado = feriados[`${d}-${dataAtual.getMonth() + 1}`];
-                if (feriado) html += `<div class="text-xs p-2 bg-red-50 rounded-lg text-red-600 border border-red-100 opacity-80 select-none">📌 ${d}: ${feriado}</div>`;
+                if (feriado) html += `<div class="text-xs p-2 bg-red-900/20 rounded-lg text-red-300 border border-red-500/10 opacity-70 select-none">📌 ${d}: ${feriado}</div>`;
             }
-            if (!html) html = `<div class="text-xs text-slate-400 text-center py-6">Toque em um dia para planejar.</div>`;
+            if (!html) html = `<div class="text-xs text-slate-600 text-center py-6 italic">Nada agendado para este mês.</div>`;
             lista.innerHTML = html;
         }
 
