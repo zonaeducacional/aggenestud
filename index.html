@@ -498,7 +498,9 @@
         }
 
         function mudarMes(dir) {
-            dataAtual.setMonth(dataAtual.getMonth() + dir);
+            // Ajusta apenas o mês, mantendo o dia 1 para evitar bugs de virada de mês (ex: 31 Jan -> Fev)
+            const novoData = new Date(dataAtual.getFullYear(), dataAtual.getMonth() + dir, 1);
+            dataAtual = novoData;
             diaSelecionado = null;
             renderizarCalendario();
         }
