@@ -1,0 +1,21 @@
+{
+    "name": "Agenda Professor 2026",
+    "short_name": "Agenda 26",
+    "start_url": "./index.html",
+    "display": "standalone",
+    "background_color": "#EEF2FF",
+    "theme_color": "#4F46E5",
+    "description": "Agenda de Planejamento Pedagógico",
+    "icons": [
+        {
+            "src": "icons/favicon.png",
+            "sizes": "192x192",
+            "type": "image/png"
+        },
+        {
+            "src": "icons/icon.svg",
+            "sizes": "any",
+            "type": "image/svg+xml"
+        }
+    ]
+}

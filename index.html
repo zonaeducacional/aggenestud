@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Trilha de Aprendizagem 2026</title>
+
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#4F46E5">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="icons/favicon.png">
+    <link rel="apple-touch-icon" href="icons/favicon.png">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            user-select: none;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .day-card {
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .day-card:active {
+            transform: scale(0.95);
+        }
+
+        .active-day {
+            border: 2px solid #4F46E5;
+            background-color: #EEF2FF;
+        }
+
+        /* Animações */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade-in {
+            animation: fadeIn 0.3s ease-out forwards;
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+
+<body
+    class="bg-gradient-to-br from-indigo-50 via-slate-50 to-purple-50 min-h-screen text-slate-800 p-4 md:p-6 pb-20 md:pb-6">
+
+    <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-6 h-full">
+
+        <!-- Coluna Esquerda: Calendário -->
+        <div class="lg:col-span-8 flex flex-col gap-6 animate-fade-in">
+
+            <header
+                class="glass-panel rounded-3xl p-5 shadow-sm flex flex-col md:flex-row justify-between items-center gap-4 border-b-4 border-indigo-500/20">
+                <div class="text-center md:text-left">
+                    <h1
+                        class="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-indigo-600 to-purple-600">
+                        Agenda 2026</h1>
+                    <p class="text-xs font-medium text-slate-500 uppercase tracking-wide">Prof. Sérgio Araújo</p>
+                </div>
+
+                <div class="flex items-center gap-4 bg-white/80 rounded-full p-1.5 shadow-inner ring-1 ring-slate-100">
+                    <button onclick="mudarMes(-1)"
+                        class="p-2.5 hover:bg-indigo-50 rounded-full transition text-indigo-600 active:scale-90">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m15 18-6-6 6-6" />
+                        </svg>
+                    </button>
+                    <span id="mesAnoDisplay" class="font-bold text-lg w-40 text-center text-slate-700">Janeiro
+                        2026</span>
+                    <button onclick="mudarMes(1)"
+                        class="p-2.5 hover:bg-indigo-50 rounded-full transition text-indigo-600 active:scale-90">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="m9 18 6-6-6-6" />
+                        </svg>
+                    </button>
+                </div>
+            </header>
+
+            <div class="glass-panel rounded-3xl p-4 md:p-6 shadow-xl shadow-indigo-100/50 flex-grow">
+                <div class="grid grid-cols-7 mb-4 text-center">
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Dom</div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Seg</div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Ter</div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Qua</div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Qui</div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Sex</div>
+                    <div class="text-[10px] font-bold text-slate-400 uppercase tracking-widest">Sáb</div>
+                </div>
+
+                <div id="calendarGrid" class="grid grid-cols-7 gap-2 md:gap-3 h-[400px] md:h-96 auto-rows-fr">
+                    <!-- Dias gerados via JS -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Coluna Direita: Detalhes -->
+        <div class="lg:col-span-4 flex flex-col gap-6 animate-fade-in" style="animation-delay: 0.1s">
+
+            <div
+                class="glass-panel rounded-3xl p-6 shadow-sm border-l-4 border-indigo-500 bg-white/80 relative overflow-hidden group">
+                <div class="absolute top-0 right-0 p-4 opacity-10 group-hover:opacity-20 transition">
+                    <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1"
+                        stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="10" />
+                        <path d="m9 12 2 2 4-4" />
+                    </svg>
+                </div>
+                <h2 class="text-sm font-bold text-indigo-600 mb-2 flex items-center gap-2 uppercase tracking-wide">
+                    Foco do Mês
+                </h2>
+                <textarea id="metaMes"
+                    class="w-full bg-slate-50 border-0 rounded-xl p-3 text-sm focus:ring-2 focus:ring-indigo-200 focus:bg-white transition resize-none h-24 shadow-inner text-slate-600 leading-relaxed"
+                    placeholder="Defina o objetivo pedagógico principal..."></textarea>
+            </div>
+
+            <div class="glass-panel rounded-3xl p-6 shadow-xl shadow-purple-100/50 flex-grow bg-white/90 flex flex-col">
+                <div class="flex justify-between items-end mb-4 border-b border-slate-100 pb-4">
+                    <div>
+                        <h2 class="text-lg font-bold text-slate-800">Diário</h2>
+                        <p id="dataSelecionada"
+                            class="text-xs text-indigo-500 font-semibold uppercase tracking-wide mt-1">Selecione um dia
+                        </p>
+                    </div>
+                    <button onclick="salvarEvento()"
+                        class="bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white text-xs font-bold px-4 py-2.5 rounded-xl transition shadow-lg shadow-indigo-500/30 flex items-center gap-2">
+                        <span>Salvar</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none"
+                            stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z" />
+                            <polyline points="17 21 17 13 7 13 7 21" />
+                            <polyline points="7 3 7 8 15 8" />
+                        </svg>
+                    </button>
+                </div>
+
+                <textarea id="eventoTexto"
+                    class="w-full flex-grow bg-slate-50/50 border-0 rounded-xl p-4 text-sm focus:ring-2 focus:ring-indigo-200 focus:bg-white transition resize-none placeholder:text-slate-400"
+                    placeholder="Toque em um dia para adicionar notas, provas ou lembretes..."></textarea>
+
+                <div class="mt-4 pt-4">
+                    <h3 class="text-[10px] font-bold text-slate-400 uppercase mb-3 flex items-center gap-2">
+                        Resumo do Mês
+                        <span class="h-px bg-slate-100 flex-grow"></span>
+                    </h3>
+                    <div id="listaEventosMes" class="space-y-2 max-h-48 overflow-y-auto pr-2 custom-scrollbar">
+                        <!-- Lista gerada via JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- PWA Install Button (Hidden by default) -->
+    <div id="installContainer"
+        class="fixed bottom-6 w-full flex justify-center pointer-events-none opacity-0 translate-y-10 transition-all duration-500 z-50">
+        <button id="btnInstall"
+            class="pointer-events-auto bg-slate-900 text-white px-6 py-3 rounded-full shadow-2xl flex items-center gap-3 font-semibold text-sm active:scale-95 transition-transform hover:bg-black ring-4 ring-white/30">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2v6" />
+                <path d="m9 15 3 3 3-3" />
+                <path d="M12 2v6" />
+                <rect width="20" height="20" x="2" y="4" rx="2" ry="2" />
+                <path d="M12 2v13" />
+            </svg>
+            Instalar App
+        </button>
+    </div>
+
+    <script>
+        // --- LÓGICA DO PWA ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('SW registrado!', reg))
+                    .catch(err => console.log('SW falhou:', err));
+            });
+        }
+
+        let deferredPrompt;
+        const installContainer = document.getElementById('installContainer');
+        const btnInstall = document.getElementById('btnInstall');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            // Mostrar botão
+            installContainer.classList.remove('opacity-0', 'translate-y-10');
+        });
+
+        btnInstall.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                deferredPrompt.prompt();
+                const { outcome } = await deferredPrompt.userChoice;
+                if (outcome === 'accepted') {
+                    deferredPrompt = null;
+                    installContainer.classList.add('opacity-0', 'translate-y-10');
+                }
+            }
+        });
+
+        // --- LÓGICA DA APLICAÇÃO ---
+        const meses = ["Janeiro", "Fevereiro", "Março", "Abril", "Maio", "Junho", "Julho", "Agosto", "Setembro", "Outubro", "Novembro", "Dezembro"];
+        let dataAtual = new Date(2026, 0, 1);
+        let diaSelecionado = null;
+
+        const feriados = {
+            "1-1": "Confraternização Universal", "21-4": "Tiradentes", "1-5": "Dia do Trabalho",
+            "7-9": "Independência", "12-10": "Nossa Sra. Aparecida", "2-11": "Finados",
+            "15-11": "Proclamação República", "25-12": "Natal"
+        };
+
+        function init() {
+            // Recuperar último estado ou iniciar padrão
+            const lastDate = localStorage.getItem('last-view-date');
+            if (lastDate) dataAtual = new Date(lastDate);
+
+            renderizarCalendario();
+            carregarMetaMes();
+            renderizarListaEventos();
+
+            document.getElementById('metaMes').addEventListener('input', (e) => {
+                const chave = `meta-2026-${dataAtual.getMonth()}`;
+                localStorage.setItem(chave, e.target.value);
+            });
+        }
+
+        function renderizarCalendario() {
+            localStorage.setItem('last-view-date', dataAtual.toISOString());
+            const ano = dataAtual.getFullYear();
+            const mes = dataAtual.getMonth();
+
+            document.getElementById('mesAnoDisplay').innerText = `${meses[mes]} ${ano}`;
+
+            carregarMetaMes();
+            renderizarListaEventos();
+
+            const primeiroDia = new Date(ano, mes, 1).getDay();
+            const totalDias = new Date(ano, mes + 1, 0).getDate();
+            const grid = document.getElementById('calendarGrid');
+            grid.innerHTML = "";
+
+            for (let i = 0; i < primeiroDia; i++) grid.appendChild(document.createElement('div'));
+
+            for (let dia = 1; dia <= totalDias; dia++) {
+                const el = document.createElement('div');
+                const chaveData = `${dia}-${mes + 1}-${ano}`;
+                const nota = localStorage.getItem(`evento-${chaveData}`);
+                const feriado = feriados[`${dia}-${mes + 1}`];
+
+                let css = "day-card bg-white/60 hover:bg-white rounded-xl p-2 cursor-pointer border border-white/50 hover:border-indigo-300 flex flex-col justify-between h-full min-h-[60px] md:min-h-[80px] shadow-sm";
+                if (diaSelecionado && dia === diaSelecionado.getDate() && mes === diaSelecionado.getMonth()) {
+                    css += " active-day ring-2 ring-indigo-400 bg-indigo-50 shadow-inner";
+                }
+
+                let dot = "";
+                if (nota) dot = `<div class="w-2 h-2 rounded-full bg-indigo-500 shadow-sm shadow-indigo-300"></div>`;
+                else if (feriado) dot = `<div class="w-2 h-2 rounded-full bg-red-400 shadow-sm shadow-red-300" title="${feriado}"></div>`;
+
+                el.className = css;
+                el.innerHTML = `<span class="font-bold text-sm ${feriado ? 'text-red-500' : 'text-slate-600'}">${dia}</span><div class="flex justify-end p-1">${dot}</div>`;
+                el.onclick = () => selecionarDia(dia);
+                grid.appendChild(el);
+            }
+        }
+
+        function selecionarDia(dia) {
+            diaSelecionado = new Date(dataAtual.getFullYear(), dataAtual.getMonth(), dia);
+            renderizarCalendario();
+            const chave = `${dia}-${dataAtual.getMonth() + 1}-${dataAtual.getFullYear()}`;
+
+            document.getElementById('dataSelecionada').innerText = diaSelecionado.toLocaleDateString('pt-BR', { weekday: 'long', day: 'numeric', month: 'long' });
+            document.getElementById('eventoTexto').value = localStorage.getItem(`evento-${chave}`) || "";
+            document.getElementById('eventoTexto').focus();
+
+            const feriado = feriados[`${dia}-${dataAtual.getMonth() + 1}`];
+            document.getElementById('eventoTexto').placeholder = feriado ? `Feriado: ${feriado}` : "Anote aqui...";
+        }
+
+        function salvarEvento() {
+            if (!diaSelecionado) return alert("Selecione um dia!");
+            const chave = `evento-${diaSelecionado.getDate()}-${diaSelecionado.getMonth() + 1}-${diaSelecionado.getFullYear()}`;
+            const txt = document.getElementById('eventoTexto').value.trim();
+            txt ? localStorage.setItem(chave, txt) : localStorage.removeItem(chave);
+            renderizarCalendario();
+        }
+
+        function carregarMetaMes() {
+            document.getElementById('metaMes').value = localStorage.getItem(`meta-2026-${dataAtual.getMonth()}`) || "";
+        }
+
+        function renderizarListaEventos() {
+            const lista = document.getElementById('listaEventosMes');
+            lista.innerHTML = "";
+            const totalDias = new Date(dataAtual.getFullYear(), dataAtual.getMonth() + 1, 0).getDate();
+            let html = "";
+
+            for (let d = 1; d <= totalDias; d++) {
+                const nota = localStorage.getItem(`evento-${d}-${dataAtual.getMonth() + 1}-${dataAtual.getFullYear()}`);
+                if (nota) html += `<div onclick="selecionarDia(${d})" class="text-xs p-3 bg-white rounded-lg border-l-4 border-indigo-400 shadow-sm cursor-pointer hover:bg-slate-50 transition"><strong class="block text-indigo-900 mb-1">Dia ${d}</strong><span class="text-slate-600">${nota}</span></div>`;
+
+                const feriado = feriados[`${d}-${dataAtual.getMonth() + 1}`];
+                if (feriado) html += `<div class="text-xs p-2 bg-red-50 rounded-lg text-red-600 border border-red-100 opacity-80 select-none">📌 ${d}: ${feriado}</div>`;
+            }
+            if (!html) html = `<div class="text-xs text-slate-400 text-center py-6">Toque em um dia para planejar.</div>`;
+            lista.innerHTML = html;
+        }
+
+        function mudarMes(dir) {
+            dataAtual.setMonth(dataAtual.getMonth() + dir);
+            diaSelecionado = null;
+            renderizarCalendario();
+        }
+
+        init();
+    </script>
+</body>
+
+</html>
